@@ -44799,6 +44799,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -44883,7 +44884,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             } else {
                 // Update
+                fetch('api/article', {
+                    method: 'put',
+                    body: JSON.stringify(this.article),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                }).then(function (res) {
+                    return res.json();
+                }).then(function (data) {
+                    _this3.article.title = '';
+                    _this3.article.body = '';
+                    alert('Article Updated');
+                    _this3.fetchArticles();
+                }).catch(function (err) {
+                    return console.log(err);
+                });
             }
+        },
+        editArticle: function editArticle(article) {
+            this.edit = true;
+            this.article.id = article.id;
+            this.article.article_id = article.id;
+            this.article.title = article.title;
+            this.article.body = article.body;
         }
     }
 });
@@ -45047,6 +45071,19 @@ var render = function() {
             _c("p", [_vm._v(_vm._s(article.body))]),
             _vm._v(" "),
             _c("hr"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning mb-2",
+                on: {
+                  click: function($event) {
+                    return _vm.editArticle(article)
+                  }
+                }
+              },
+              [_vm._v("Edit")]
+            ),
             _vm._v(" "),
             _c(
               "button",
